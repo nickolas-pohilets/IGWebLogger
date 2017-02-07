@@ -102,7 +102,7 @@ static IGWebLogger *sharedInstance;
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString* logLevel = @"verbose";
-    switch (logMessage->logFlag)
+    switch (logMessage->_flag)
     {
         case LOG_FLAG_ERROR : logLevel = @"error"; break;
         case LOG_FLAG_WARN : logLevel = @"warn"; break;
@@ -110,17 +110,15 @@ static IGWebLogger *sharedInstance;
         default : logLevel = @"verbose"; break;
     }
     
-    NSError* error;
-    NSString* message = logMessage->logMsg ? logMessage->logMsg : @"";
-    NSString* file = [NSString stringWithUTF8String:logMessage->file];
-    NSString* function = [NSString stringWithUTF8String:logMessage->function];
     NSDictionary* data = @{
-                           @"message": message,
-                           @"level": logLevel,
-                           @"file": file ? file : @"",
-                           @"function": function ? function : @"",
-                           @"line": [NSNumber numberWithInt:logMessage->lineNumber]
-                        };
+        @"message": logMessage->_message ?: @"",
+        @"level": logLevel,
+        @"file": logMessage->_file ?: @"",
+        @"function": logMessage->_function ?: @"",
+        @"line": @(logMessage->_line)
+    };
+    
+    NSError* error;
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:data
                                                        options:0
                                                          error:&error];
