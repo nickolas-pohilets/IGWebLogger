@@ -68,7 +68,7 @@ static IGWebLogger *sharedInstance;
     [httpServer setConnectionClass:[IGWebLoggerURLConnection class]];
     [httpServer setType:@"_http._tcp."];
 
-    [httpServer setPort:8888];
+    [httpServer setPort:port];
     
     NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"IGWebLogger.bundle"];
     [httpServer setDocumentRoot:webPath];
