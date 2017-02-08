@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
   s.source_files = 'IGWebLogger/Classes/*.{m,h}'
   s.resource = 'IGWebLogger/IGWebLogger.bundle'
 
-  s.dependency "CocoaLumberjack"
-  s.dependency "CocoaHTTPServer", "~> 2.3"
+  s.dependency "CocoaLumberjack", "~> 3.0.0"
+  s.dependency "CocoaHTTPServer2", "~> 2.4.1"
 end

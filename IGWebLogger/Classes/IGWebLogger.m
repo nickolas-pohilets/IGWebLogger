@@ -102,12 +102,14 @@ static IGWebLogger *sharedInstance;
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString* logLevel = @"verbose";
-    switch (logMessage->_flag)
-    {
-        case LOG_FLAG_ERROR : logLevel = @"error"; break;
-        case LOG_FLAG_WARN : logLevel = @"warn"; break;
-        case LOG_FLAG_INFO : logLevel = @"info"; break;
-        default : logLevel = @"verbose"; break;
+    if (logMessage->_flag & DDLogFlagError) {
+        logLevel = @"error";
+    } else if (logMessage->_flag & DDLogFlagWarning) {
+        logLevel = @"warn";
+    } else if (logMessage->_flag & DDLogFlagInfo) {
+        logLevel = @"info";
+    } else {
+        logLevel = @"verbose";
     }
     
     NSDictionary* data = @{
